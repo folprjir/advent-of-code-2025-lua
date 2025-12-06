@@ -46,6 +46,7 @@ local function place_antinodes(antena_row, antena_column, vec_row, vec_column)
   end
 end
 
+
 for _, antenas in pairs(map_of_antenas) do
   for antena_i, antena in pairs(antenas) do
     for ohther_i, other in pairs(antenas) do
@@ -61,7 +62,6 @@ end
 
 local sum = 0
 
--- for (int row = 0; row < rows; row++) {}
 
 for row = 1, rows do
   for column = 1, columns do
