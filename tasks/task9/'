@@ -1,0 +1,75 @@
+package.path = package.path .. ";../../utils/?.lua;../../structures/?.lua"
+
+local p = require "print_utils"
+local f = require "file_utils"
+
+local test1 = "12345"
+local test2 = "2333133121414131402"
+
+local packed = f.loadFile("./data/input.txt")
+
+
+local unpacked = {}
+
+for i = 1, #packed do
+  local n = tonumber(packed:sub(i, i))
+  if not n then break end
+  if i % 2 == 1 then
+    for _ = 1, n do
+      unpacked[#unpacked + 1] = math.floor(i / 2)
+    end
+  else
+    for _ = 1, n do
+      unpacked[#unpacked + 1] = "."
+    end
+  end
+end
+
+
+local files = {}
+local free_spaces = {}
+
+local free_space = false
+local head = 1
+local id = -1
+local segment_start = 1
+local segment_end = 1
+
+
+local function create_segment()
+  local res = {
+    id = id,
+    segment_start = segment_start,
+    segment_end = segment_end
+  }
+  segment_start = segment_end
+  return res
+end
+
+
+for i, val in ipairs(unpacked) do
+  if val == "." and id ~= -1 then
+    files[#files + 1] = create_segment()
+    goto continue
+  end
+  if val == id then
+    segment_end = segment_end + 1
+    goto continue
+  end
+
+  ::continue::
+end
+
+
+local check_sum = 0
+for i, id in ipairs(unpacked) do
+  if id == "." then
+    goto continue
+  end
+  check_sum = check_sum + (i - 1) * id
+  ::continue::
+end
+
+
+p.printArray(unpacked)
+print(check_sum)

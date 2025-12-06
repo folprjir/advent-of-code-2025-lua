@@ -6,7 +6,7 @@ local linesLoaded = GetLinesFromFile("./data/in01.txt")
 
 local function reverseMatrixInPlace(m)
 
-  local function reverseArray(arr)
+local function reverseArray(arr)
     local n = #arr
     for i = 1, math.floor(n / 2) do
       local tmp = arr[i]
