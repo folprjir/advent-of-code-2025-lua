@@ -1,15 +1,6 @@
 package.path = package.path .. ";../../utils/?.lua;../../structures/?.lua"
 
-local p = require "print_utils"
 local f = require "file_utils"
-
-local test1 = "2222222"
-local test2 = "2333133121414131402"
-local test3 = "22233344411111112"
-local test4 = "90909"
-local test5 = "12345"
-local test6 = "1530111"
-
 local packed = f.loadFile("./data/input.txt")
 
 
@@ -22,6 +13,7 @@ local files = {}
 
 local id = 0
 local begin = 1
+
 
 for i = 1, #packed do
   local n = tonumber(packed:sub(i, i))
@@ -38,15 +30,6 @@ for i = 1, #packed do
   ::continue::
 end
 
---[[
-for _, file in ipairs(files) do
-  print(file.id, file.begin, file.size)
-end
-print(" --- ")
-for _, free_space in ipairs(free_spaces) do
-  print(free_space.id, free_space.begin, free_space.size)
-end
-]]
 
 local unpacked = {}
 for i = 1, #packed do
@@ -64,20 +47,15 @@ for i = 1, #packed do
 end
 
 
--- p.printArray(unpacked)
-
 local function move(file_i, space_i)
   local file = files[file_i]
   local space = free_spaces[space_i]
-
   for i = 0, file.size - 1 do
     unpacked[file.begin + i] = "."
     unpacked[space.begin + i] = file.id
   end
   if file.size == space.size then
-    -- table.remove(free_spaces, space_i)
-    space.begin = space.begin + file.size
-    space.size = 0
+    table.remove(free_spaces, space_i)
   else
     space.begin = space.begin + file.size
     space.size = space.size - file.size
@@ -87,11 +65,9 @@ end
 
 for i = #files, 1, -1 do
   for j = 1, #free_spaces do
-    -- print("i: ", i, ", j: ", j, #files, #free_spaces)
     if files[i].begin <= free_spaces[j].begin then
       break
     end
-
     if files[i].size <= free_spaces[j].size then
       move(i, j)
       break
@@ -99,13 +75,14 @@ for i = #files, 1, -1 do
   end
 end
 
+
 local check_sum = 0
 for i, id2 in ipairs(unpacked) do
   if id2 == "." then
-    goto continue3
+    goto continue2
   end
   check_sum = check_sum + (i - 1) * tonumber(id2)
-  ::continue3::
+  ::continue2::
 end
 
 print("the sum is: ", check_sum)
