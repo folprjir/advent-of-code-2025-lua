@@ -1,0 +1,6 @@
+This is day 10, task 1
+0
+was not visited, adding (7, 1)
+0
+was not visited, adding (7, 7) 222
+There is exactly 2 trails
