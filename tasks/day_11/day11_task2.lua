@@ -142,17 +142,14 @@ local function count_stones(stones, step)
   local sum = 0
   for _, stone in ipairs(stones) do
     local cnt = memo_get(stone, step)
-    if cnt ~= nil then
-      sum = sum + cnt
-    else
+    if cnt == nil then
       cnt = count_stones(blink_on_one_stone(stone), step - 1)
       memo_add(stone, step, cnt)
-      sum = sum + cnt
     end
+      sum = sum + cnt
   end
   return sum
 end
 
-print(#memo)
 print(count_stones(first, 75))
 
