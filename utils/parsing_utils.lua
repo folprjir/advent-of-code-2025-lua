@@ -1,6 +1,12 @@
 local M = {}
 
 
+function IsDigit(byte)
+  -- 48 -> 0, 57 -> 9 
+  return (byte > 47) and (byte < 58)
+end
+
+
 function M.createMatrix(lines)
   local res = {}
   local longest = 0
