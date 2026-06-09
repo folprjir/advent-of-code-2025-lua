@@ -50,4 +50,7 @@ while true do
   end
   file:read("*l")
 end
+
+file:close()
+
 print(tokens)

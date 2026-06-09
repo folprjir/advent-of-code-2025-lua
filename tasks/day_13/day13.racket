@@ -1,0 +1,31 @@
+#lang racket
+
+(define (cost a b)
+  (+ (* 3 a) b))
+
+(define (solve x1 y1 x2 y2 b1 b2)
+  (define a_ (/ (- (* b2 x2) (* b1 y2)) (- (* x2 y1) (* x1 y2))))
+  (define b_ (/ (- b1 (* a_ x1)) x2))
+  (define a (round a_))
+  (define b (round b_))
+  (if (or
+       (not (= (+ (* a x1) (* b x2)) b1))
+       (not (= (+ (* a y1) (* b y2)) b2)))
+  0
+  (cost a b)))
+
+(define (solve_helper list)
+  (apply solve list))
+
+
+(define (get_tokens_cnt path)
+
+  (define (extract-numbers s)
+    (map string->number
+      (regexp-match* #rx"[0-9]+" s)))
+
+  (define input (file->string path))
+  (define blocks (string-split input "\n\n"))
+  (define extracted_numbers (map extract-numbers blocks))
+  (define costs (map solve_helper extracted_numbers))
+  (apply + costs))
