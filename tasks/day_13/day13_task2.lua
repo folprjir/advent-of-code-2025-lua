@@ -20,26 +20,14 @@ end
 
 
 local function find_best_combo(b1, b2, x1, x2, y1, y2)
-
   local a = (b2 * x2 - b1 * y2) / (x2 * y1 - x1 * y2)
   local b = (b1 - a * x1) / x2
-
-  -- print(string.format("b1 %d, b2: %d, x1: %d, x2: %d, y1: %d, y2: %d", b1, b2, x1, x2, y1, y2))
-
-  a = round(a) b = round(b)
-
---  print(string.format("(%d, %d) - (%d, %d) - (%d, %d)",
---    a * x1 + b * x2,
---    a * y1 + b * y2,
---    b1, b2,
---    a, b
---  ))
-
+  a = round(a)
+  b = round(b)
   if a * x1 + b * x2 ~= b1 or
      a * y1 + b * y2 ~= b2 then
     return nil
   end
-
   return {a = a , b = b}
 end
 
@@ -47,8 +35,6 @@ end
 local file = io.open("./data/input.txt")
 local b1, b2, x1, x2, y1, y2
 local tokens = 0
-
-
 while true do
   local line = file:read("*l")
   if line == nil then break end
@@ -64,7 +50,4 @@ while true do
   end
   file:read("*l")
 end
-
 print(tokens)
-
-
