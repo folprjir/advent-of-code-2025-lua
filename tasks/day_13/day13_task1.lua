@@ -58,19 +58,20 @@ local file = io.open("./data/input.txt")
 local x, y, x1, y1, x2, y2
 local tokens = 0
 
+
 while true do
   local line = file:read("*l")
   if line == nil then break end
   x1, y1 = extract_nums(line)
   x2, y2 = extract_nums(file:read("*l"))
   x, y = extract_nums(file:read("*l"))
-  print(x, y, x1, y1, x2, y2)
   local combo = find_best_combo(x, y, x1, y1, x2, y2)
   if combo ~= nil then
     tokens = tokens + price(combo)
   end
   file:read("*l")
 end
+
 
 print(tokens)
 
