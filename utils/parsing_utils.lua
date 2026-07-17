@@ -51,6 +51,8 @@ function M.extractNumbersFromString(str)
   local fVal = 0 -- value for the decimal part
   local div = 1
 
+  local sign = 1
+
   ::state1::
   exp = 1
   val = 0
@@ -59,6 +61,8 @@ function M.extractNumbersFromString(str)
   elseif IsDigit(byte) then
     val = byte - 48
     goto state2
+  elseif byte == 45 then
+    sign = -1
   end
   goto state1
 
@@ -91,7 +95,8 @@ function M.extractNumbersFromString(str)
   goto state5
 
   ::state5::
-  table.insert(res, val + fVal / div)
+  table.insert(res, (val + fVal / div) * sign)
+  sign = 1
   goto state1
 
   ::finish::
