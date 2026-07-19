@@ -27,6 +27,7 @@ end
 local max_row = row_i
 local max_col = #g[1]
 
+--[[
 local function print_g()
 	local str = ""
 	for row = 1, max_row do
@@ -37,8 +38,8 @@ local function print_g()
 	end
 	print(str)
 end
-
 print_g()
+]]
 
 local steps = {}
 while true do
@@ -53,19 +54,20 @@ end
 
 file:close()
 
+--[[
 local str = ""
 for i = 1, #steps do
 	str = str .. steps[i]
 end
 print("\n steps:", str)
+]]
 
 local robot_row, robot_col = 0, 0
 
 for row = 1, max_row do
 	for col = 1, max_col do
 		if g[row][col] == "@" then
-			robot_row = row
-			robot_col = col
+			robot_row, robot_col = row, col
 		end
 	end
 end
