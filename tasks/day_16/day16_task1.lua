@@ -54,7 +54,7 @@ local function update_dist(d, v, price)
 	if d[v.row][v.col] == nil then
 		d[v.row][v.col] = {}
 	end
-	if d[v.row][v.col][v.dir] == nil or d[v.row][v.col][v.dir] < price then
+	if d[v.row][v.col][v.dir] == nil or d[v.row][v.col][v.dir] > price then
 		d[v.row][v.col][v.dir] = price
 	end
 end
@@ -118,19 +118,6 @@ local function get_neighbors(v)
 	return res
 end
 
-local function print_v(d, v)
-	print(
-		string.format(
-			"row: %d, col: %d, dir: %s, dist: %d, g: %s",
-			v.row,
-			v.col,
-			v.dir,
-			d[v.row][v.col][v.dir],
-			g[v.row][v.col]
-		)
-	)
-end
-
 local function dijkstra()
 	local queue = {}
 	local d = {}
@@ -139,7 +126,6 @@ local function dijkstra()
 	update_dist(d, first, 0)
 	queue[#queue + 1] = first
 
-	-- print_dist(vertices, d)
 	while #queue > 0 do
 		local min_v = extract_min(queue, d)
 		-- print_v(d, min_v)
@@ -150,7 +136,6 @@ local function dijkstra()
 				queue[#queue + 1] = n
 			end
 		end
-		-- print_dist(vertices, d)
 	end
 
 	return d
